@@ -1,0 +1,6 @@
+<form action="/charts/" method="post">
+    {% csrf_token %}
+    <label for="data">Ingrese el nombre de un producto: </label>
+    <input id="data" type="text" name="data" placeholder="nombre producto">
+    <input type="submit" value="Buscar">
+</form>
