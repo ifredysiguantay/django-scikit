@@ -7,7 +7,11 @@
           <div class="panel panel-default">
   
               <div class="panel-heading">Ventas</div>
-  
+            <p>Precio del producto: {{price_product}}</p>
+            {% for a in sales_quantity%}
+            <p> semana: {{ forloop.counter }} - cantidad de ventas: {{a}} Venta: = {{a}} * {{price_product}} = {% widthratio price_product 1 a %} </p><br>
+            {% endfor %}
+            
               <div class="panel-body">
   
                   <canvas id="canvas" height="280" width="600"></canvas>
@@ -29,8 +33,6 @@
   var x = {{labels|safe}};
   
   var y = {{data|safe}};
-
-  console.log('y val'+y+'x val'+x)
   
   var barChartData = {
   
@@ -38,7 +40,7 @@
   
       datasets: [{
   
-          label: 'Cantidades',
+          label: 'Ventas',
   
           backgroundColor: "pink",
   
@@ -74,6 +76,13 @@
                   }
   
               },
+              scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 100
+                        }
+                    }]
+                },
   
               responsive: true,
   

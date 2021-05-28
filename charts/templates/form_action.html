@@ -1,6 +1,8 @@
 <form action="/charts/" method="post">
     {% csrf_token %}
     <label for="data">Ingrese el nombre de un producto: </label>
-    <input id="data" type="text" name="data" placeholder="nombre producto">
+    <input id="data" type="text" name="data" placeholder="nombre producto"><br><br>
+    <label for="data">Cantidad de semanas para prediccion: </label>
+    <input id="data" type="number" name="weeks" min = "0" placeholder="semanas">
     <input type="submit" value="Buscar">
 </form>
