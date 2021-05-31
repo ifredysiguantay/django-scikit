@@ -18,5 +18,6 @@ from django.urls import path,include
 from charts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('charts/',views.pie_chart)
+    path('charts/',views.pie_chart),
+    path('load_excel/',views.index),
 ]
