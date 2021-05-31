@@ -6,3 +6,12 @@
     <input id="data" type="number" name="weeks" min = "0" placeholder="semanas">
     <input type="submit" value="Buscar">
 </form>
+<br><br>
+<form action="/load_excel/" method = "post" enctype="multipart/form-data">
+{% csrf_token %}
+<label for="data">Adjunte el archivo excel </label>
+<input type="file" name="excel_file" placeholder="Subir archivo excel" required>
+<input type="submit"
+value="Subir"
+style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+</form>
