@@ -6,6 +6,10 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 import warnings
 from django.http import HttpResponse, HttpResponseNotFound
+import openpyxl
+import os
+
+
 warnings.filterwarnings(action="ignore", module="sklearn", message="^internal gelsd")
 cursor = connections['default'].cursor()
 
@@ -78,3 +82,41 @@ def pie_chart(request):
     else:
         return render(request,'form_action.html')
 
+def index(request):
+    if request.method == 'POST':
+        excel_file = request.FILES['excel_file']
+
+        wb = openpyxl.load_workbook(excel_file)
+
+        excel_data = list()
+        row_data = list()
+        tmp_data = list
+        worksheet = wb['tabla3']
+        for row in range(1,worksheet.max_row+1):  
+            for column in 'B':
+                cel_name = "{}{}".format(column,row)
+                print(worksheet[cel_name].value)
+                try:
+                    int(worksheet[cel_name].value)
+                except:
+                    worksheet[cel_name].value = 0
+                row_data.append(int(worksheet[cel_name].value)) 
+    
+        row_data.pop(0)
+        excel_data.append(min(row_data))
+        excel_data.append(sum(row_data)/len(row_data))
+        excel_data.append(max(row_data))
+        
+
+        data = {'Minimo': excel_data[0],
+                'Promedio': excel_data[1],
+                'Maximo': excel_data[2]
+        }
+        print(excel_data)
+        
+        output_file = pd.DataFrame(data,columns = ['Minimo', 'Promedio','Maximo'],index=[0]).to_excel('output.xlsx')
+        file_path = os.path.join(os.path.dirname(os.path.realpath(__name__)),'output.xlsx')
+        response = HttpResponse(open(file_path,'rb').read())
+        response['Content-Type'] = 'mimetype/submimetype'
+        response['Content-Disposition'] = 'attachment;filename=output.xlsx'
+        return response
